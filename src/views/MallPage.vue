@@ -4,8 +4,8 @@
     <hr>
     <div id="container">
       <div class="item" v-for="item in itemList">
-        <div class="itemName">{{item.name}}</div>
-        <div class="itemPrice">{{item.price}}</div>
+        <div class="itemName">{{item.productName}}</div>
+        <div class="itemPrice">{{item.productPrice}}</div>
         <br>
         <div class="smallbox"></div>
 
@@ -19,6 +19,7 @@
   </div>
 </template>
 <script>
+  import axios from 'axios'
   export default {
     name: 'MallPage',
     data: function aa() {
@@ -28,19 +29,27 @@
       }
     },
     mounted() {
-      this.itemList = [{
-        "name": "heihei",
-        "price": 2000
-      }, {
-        "name": "s",
-        "price": 2
-      }, {
-        "name": "s",
-        "price": 2
-      }, {
-        "name": "s",
-        "price": 2
-      }]
+      // this.itemList = [{
+      //   "name": "heihei",
+      //   "price": 2000
+      // }, {
+      //   "name": "s",
+      //   "price": 2
+      // }, {
+      //   "name": "s",
+      //   "price": 2
+      // }, {
+      //   "name": "s",
+      //   "price": 2
+      // }]
+      axios.get('/itemList').then((res)=>{
+        let data = res.data;
+        if(data.status == '0'){
+          this.itemList = data.result.itemList;
+        }else if(data.status=='1'){
+          this.itemList = []
+        }
+      })
     }
 
   }
