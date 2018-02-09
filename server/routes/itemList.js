@@ -8,8 +8,20 @@ mongoose.connect('mongodb://127.0.0.1:27017/testMall')//连接数据库
 // mongoose.connection.on('error',function(){})//监听连接失败
 // mongoose.connection.on('disconnected',function(){})//监听连接失败
 
+
+//Blog.find({ author: 'me' }).exec(callback); 推荐
+//Blog.find({ author: 'me'}, callback);
+
 router.get('/',function(req,res,next){
-  items.find({},function(err,doc){
+  let sort = parseInt(req.param('sort'));
+  let page = parseInt(req.param('page'))
+  let size = parseInt(req.param('size'));
+
+  items.find({})
+  .sort({'salePrice':sort})
+  .skip((page-1)*size)
+  .limit(size)
+  .exec(function(err,doc){
     if(err){
       res.json({
         status:'1',
