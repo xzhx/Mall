@@ -14,6 +14,7 @@ mongoose.connect('mongodb://127.0.0.1:27017/testMall')//连接数据库
 
 router.get('/',function(req,res,next){
   let sort = parseInt(req.param('sort'));
+  if(sort!==sort) sort=1;
   let page = parseInt(req.param('page'))
   let size = parseInt(req.param('size'));
 

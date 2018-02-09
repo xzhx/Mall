@@ -2,10 +2,12 @@
   <div>
     <header>这里是暂时的页首</header>
     <hr>
+    <button @click="changeSort">{{sortWay}}</button>
     <div id="container">
+
       <div class="item" v-for="item in itemList">
         <div class="itemName">{{item.productName}}</div>
-        <div class="itemPrice">{{item.productPrice}}</div>
+        <div class="itemPrice">{{item.salePrice}}</div>
         <br>
         <div class="smallbox"></div>
 
@@ -25,24 +27,34 @@
     data: function aa() {
       return {
         itemList: [],
-        msg: "jasdia"
+        msg: "jasdia",
+        sort: 1,
+        // defaultPage:1,
+        // defaultSize:6
+        page:1,
+        size:6,
+        sortWay:"升序"
       }
     },
     mounted() {
-      // this.itemList = [{
-      //   "name": "heihei",
-      //   "price": 2000
-      // }, {
-      //   "name": "s",
-      //   "price": 2
-      // }, {
-      //   "name": "s",
-      //   "price": 2
-      // }, {
-      //   "name": "s",
-      //   "price": 2
-      // }]
-      axios.get('/itemList').then((res)=>{
+      // axios.get('/itemList').then((res)=>{
+      //   let data = res.data;
+      //   if(data.status == '0'){
+      //     this.itemList = data.result.itemList;
+      //   }else if(data.status=='1'){
+      //     this.itemList = []
+      //   }
+      // })
+      this.getItem();
+    },
+    methods:{
+      getItem(){
+        var param = {
+          page:this.page,
+          size:this.size,
+          sort:this.sort
+        }
+        axios.get('/itemList',{params:param}).then((res)=>{
         let data = res.data;
         if(data.status == '0'){
           this.itemList = data.result.itemList;
@@ -50,6 +62,14 @@
           this.itemList = []
         }
       })
+      },
+      changeSort(){
+        this.sort = -this.sort;
+        this.page = 1;
+        this.getItem();
+        if(this.sort==1) this.sortWay="升序";
+        if(this.sort==-1) this.sortWay="降序";
+      }
     }
 
   }
