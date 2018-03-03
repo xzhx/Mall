@@ -17,12 +17,16 @@ router.post('/login',function(req,res,next){
         msg:"wrong"
       })
     }else{
-      console.log('suc')
-      res.json({
+      if(doc){
+        console.log('suc')
+        res.json({
         result:{
           userName:doc.userName
         }
       })
+      } else {
+        res.json({msg:"wrong userName or password"})
+      }
     }
   })
 })
