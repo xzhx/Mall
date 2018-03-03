@@ -57,7 +57,7 @@
         axios.get('/itemList',{params:param}).then((res)=>{
         let data = res.data;
         if(data.status == '0'){
-          this.itemList = data.result.itemList;
+          this.itemList = data.data.itemList;
         }else if(data.status=='1'){
           this.itemList = []
         }

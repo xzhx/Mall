@@ -31,8 +31,8 @@ router.get('/',function(req,res,next){
     }else{
       res.json({
         status:'0',
-        msg:'获取商品信息',
-        result:{
+        statusInfo:'获取商品信息',
+        data:{
           number:doc.length,
           itemList:doc
         }

@@ -18,9 +18,11 @@ router.post('/login',function(req,res,next){
       })
     }else{
       if(doc){
-        console.log('suc')
+        // console.log('suc')
         res.json({
-        result:{
+          status:'0',
+          statusInfo:'',
+          data:{
           userName:doc.userName
         }
       })
