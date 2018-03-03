@@ -12,6 +12,10 @@ mongoose.connect('mongodb://127.0.0.1:27017/testMall')//连接数据库
 //Blog.find({ author: 'me' }).exec(callback); 推荐
 //Blog.find({ author: 'me'}, callback);
 
+// 查询商品接口
+// 参数sort表示升降序
+// 参数page表示分页中的第几页
+// size表示每一页的商品数量
 router.get('/',function(req,res,next){
   let sort = parseInt(req.param('sort'));
   if(sort!==sort) sort=1;
@@ -25,13 +29,13 @@ router.get('/',function(req,res,next){
   .exec(function(err,doc){
     if(err){
       res.json({
-        status:'1',
-        msg:err.message,
+        status:"1",
+        statusInfo:err.message,
       })
     }else{
       res.json({
-        status:'0',
-        statusInfo:'获取商品信息',
+        status:"0",
+        statusInfo:"获取商品信息",
         data:{
           number:doc.length,
           itemList:doc

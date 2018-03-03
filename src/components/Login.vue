@@ -11,7 +11,8 @@
             <input type="text" v-model="password" class="form-control" placeholder="Username" aria-describedby="basic-addon1">
         </div>
         <button type="button" @click="login" class="btn btn-primary btn-login">登陆</button>
-        {{userName}}
+        <br>
+
     </div>
 </template>
 
@@ -31,6 +32,9 @@
         axios.post("/users/login",{
           userName:this.userName,
           password:this.password
+        }).then((res)=>{
+          let result = res.data;
+          alert(result.statusInfo)
         })
       }
     }
