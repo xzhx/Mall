@@ -1,6 +1,6 @@
 <template>
   <div>
-    <header>这里是暂时的页首</header>
+    <nav-header></nav-header>
     <hr>
     <button @click="changeSort">{{sortWay}}</button>
     <div id="container">
@@ -21,9 +21,13 @@
   </div>
 </template>
 <script>
+  import NavHeader from './../components/NavHeader.vue'
   import axios from 'axios'
   export default {
     name: 'MallPage',
+    components:{
+      NavHeader
+    },
     data: function aa() {
       return {
         itemList: [],
