@@ -6,18 +6,26 @@
             <header>
                 <ul class="left menu">
                     <li>
-                        <a href="#">商城首页</a>
+                        <a href="http://localhost:8080/#/">商城首页</a>
                     </li>
                     <li>
-                        <a href="#">广州</a>
+                        <a href="javascript:;">广州</a>
                     </li>
                 </ul>
-                <ul class="right menu">
+                <ul class="right menu" v-show="!loginUserName">
                     <li>
-                        <a href="#" @click="display">登陆</a>
+                        <a href="javascript:;" @click="display">登陆</a>
                     </li>
                     <li>
-                        <a href="#">注册</a>
+                        <a href="javascript:;">注册</a>
+                    </li>
+                </ul>
+                <ul class="right menu" v-show="loginUserName">
+                    <li>
+                        <span>欢迎您，{{loginUserName}}</span>
+                    </li>
+                    <li>
+                        <a href="javascript:;" @click="logout">登出</a>
                     </li>
                 </ul>
             </header>
@@ -38,9 +46,11 @@
                 <div class="username">
                     <input class="" type="password" v-model="password" placeholder="Password">
                 </div>
+                <span style="color:red;">{{check}}</span>
                 <button @click="login">
                     登陆
                 </button>
+
                 <!-- <button>
                       注册
                     </button> -->
@@ -48,6 +58,7 @@
 
 
         </div>
+        <div id="zhezhao" v-if="ifShow" @click="hidden"></div>
     </div>
 </template>
 
@@ -59,9 +70,15 @@ export default {
     return {
       userName: "",
       password: "",
-      flag: "",
-      ifShow:false
+      //loginUserName:"",
+      ifShow:false,
+      check:" "
     };
+  },
+  computed:{
+    loginUserName(){
+      return this.$store.state.userName;
+    }
   },
   methods: {
     login: function() {
@@ -72,19 +89,48 @@ export default {
         })
         .then(res => {
           let result = res.data;
-          alert(result.statusInfo);
+          // alert(result.statusInfo);
 
           if(result.status==0){
             this.ifShow = false;
+            this.check = " ";
+            //this.loginUserName = result.data.userName
+            // 使用vuex保存用户信息
+            this.$store.commit('setUserName',result.data.userName);
+          }else{
+            this.check = '账号或密码错误';
           }
+          // this.flag=true;
         });
+    },
+    logout: function(){
+      axios.post("/users/logout").then((res)=>{
+        //this.loginUserName = ""
+        // 使用vuex保存用户信息
+        this.$store.commit('setUserName','');
+      })
     },
     display: function(){
       this.ifShow = true;
     },
     hidden: function(){
       this.ifShow = false;
+    },
+    ifLogin: function(){
+      axios.get("/users/ifLogin").then((res)=>{
+        let status = res.data.status;
+        if(status == "0"){
+          // this.loginUserName = res.data.data.userName;
+          // 使用vuex保存用户信息
+          this.$store.commit('setUserName',res.data.data.userName);
+
+        }
+      })
     }
+
+  },
+  mounted(){
+    this.ifLogin()
   }
 };
 </script>
@@ -119,12 +165,16 @@ a {
 a:visited {
   color: #999;
 }
+ul span{
+  color: #999;
+}
 a:hover {
   color: #f30213;
 }
 .header-container {
   background: #e3e4e5;
   min-width: 1100px;
+  margin-bottom: 50px;
 }
 header::after {
   content: "";
@@ -185,6 +235,17 @@ header::after {
   border-radius: 4px;
   border: 1px solid transparent;
   margin: 10px 0;
+}
+#zhezhao{
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background-color: black;
+  opacity:0.5;
+  filter:Alpha(opacity=50);
+  /* display: block; */
 }
 
 </style>

@@ -16,6 +16,12 @@ module.exports = {
       },
       '/users/login':{
         target:'http://localhost:3000'
+      },
+      '/users/logout':{
+        target:'http://localhost:3000'
+      },
+      '/users/ifLogin':{
+        target:'http://localhost:3000'
       }
     },
 

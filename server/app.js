@@ -22,10 +22,30 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+// 设置拦截器，设置登陆拦截，访问指定接口时，如果请求里没有登陆的cookie就拦截，返回json指示当前未登录
+app.use(function(req,res,next){
+  //检查cookie
+  if(!!req.cookies.userName){
+    // next()表示将控制权交给下一个中间件，之后的中间件就是我们建立的路由表，所以拦截器要在路由表的前面
+    next();
+  } else {
+    if(req.path == '/users/login' || req.path == '/itemList'){
+      // 登陆接口和查看商品接口不拦截
+      next();
+    } else {
+      res.json({
+        status: '-2',
+        statusInfo: '未登陆',
+        data:{}
+      })
+    }
+  }
+
+});
 
 app.use('/', index);
 app.use('/users', users);
-app.use('/itemList',itemList)
+app.use('/itemList',itemList);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -1,7 +1,8 @@
 <template>
   <div>
     <nav-header></nav-header>
-    <hr>
+    <!-- <hr> -->
+    <div class="main">
     <button @click="changeSort">{{sortWay}}</button>
     <div id="container">
 
@@ -17,7 +18,9 @@
       </div>
     </div>
     <hr>
+    </div>
     <footer>这里是暂时的页尾</footer>
+
   </div>
 </template>
 <script>
@@ -84,7 +87,9 @@
     margin: 0px;
     padding: 0px;
   }
-
+  div.main{
+    margin: 0 154px;
+  }
   #container {
     display: flex;
     width: 100%;

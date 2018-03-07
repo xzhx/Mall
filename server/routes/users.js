@@ -23,6 +23,13 @@ router.post('/login',function(req,res,next){
     }else{
       if(doc){
         // console.log('suc')
+        //加入cookie,使用res.cookie()
+        //cookie的maxAge表示cookie的过期时间
+        //cookie的path表示路径
+        res.cookie("userName",doc.userName,{
+          path: "/",
+          maxAge: "1000000"
+        })
         res.json({
           status:"0",
           statusInfo:"登陆成功",
@@ -40,4 +47,28 @@ router.post('/login',function(req,res,next){
   })
 })
 
+
+// 用户登出接口
+router.post("/logout",function(req,res,next){
+  res.clearCookie("userName");
+  res.json({
+    status: "0",
+    statusInfo: "log out"
+  })
+})
+
+
+// 根据cookie确认用户是否登陆
+router.get("/ifLogin",(req,res,next)=>{
+  let userName = req.cookies.userName;
+  if(userName){
+    res.json({
+      status: "0",
+      statusInfo: "登录状态",
+      data:{
+        userName: userName
+      }
+    })
+  }
+})
 module.exports = router;
