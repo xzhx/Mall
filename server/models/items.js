@@ -6,7 +6,7 @@ var Schema = mongoose.Schema;//Schema定义表的模型
 var itemsSchema = new Schema({
   "productId" : String,
   "productName" : String,
-  "salePrice" : Number,
+  "productPrice" : Number,
   "productImage" : String
 })
 

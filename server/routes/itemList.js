@@ -18,12 +18,11 @@ mongoose.connect('mongodb://127.0.0.1:27017/testMall')//连接数据库
 // size表示每一页的商品数量
 router.get('/',function(req,res,next){
   let sort = parseInt(req.param('sort'));
-  if(sort!==sort) sort=1;
+  // if(sort!==sort) sort=1;
   let page = parseInt(req.param('page'))
   let size = parseInt(req.param('size'));
-
-  items.find({})
-  .sort({'salePrice':sort})
+  if(sort==2){
+    items.find({})
   .skip((page-1)*size)
   .limit(size)
   .exec(function(err,doc){
@@ -43,6 +42,29 @@ router.get('/',function(req,res,next){
       })
     }
   })
+  } else{
+    items.find({})
+  .sort({'productPrice':sort})
+  .skip((page-1)*size)
+  .limit(size)
+  .exec(function(err,doc){
+    if(err){
+      res.json({
+        status:"1",
+        statusInfo:err.message,
+      })
+    }else{
+      res.json({
+        status:"0",
+        statusInfo:"获取商品信息",
+        data:{
+          number:doc.length,
+          itemList:doc
+        }
+      })
+    }
+  })
+  }
 });
 
 module.exports = router;

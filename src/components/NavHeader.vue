@@ -4,7 +4,7 @@
 
         <div class="header-container">
             <header>
-                <ul class="left menu">
+                <!-- <ul class="left menu">
                     <li>
                         <a href="http://localhost:8080/#/">商城首页</a>
                     </li>
@@ -27,7 +27,37 @@
                     <li>
                         <a href="javascript:;" @click="logout">登出</a>
                     </li>
-                </ul>
+                </ul> -->
+                <div class="nav">
+                <div class="nav-left">
+                    <div class="img">
+                        <a href="http://localhost:8080/#/"><img src="./../../static/logo/logo.png" alt=""></a>
+                    </div>
+                </div>
+                <div class="nav-right">
+                    <ul class="right menu" v-show="!loginUserName">
+                        <li>
+                            <a href="javascript:;" @click="display">登陆</a>
+                        </li>
+                        <li>
+                            <a href="javascript:;">注册</a>
+                        </li>
+                    </ul>
+                    <ul class="right menu" v-show="loginUserName">
+                        <li>
+                            <span>欢迎您，{{loginUserName}}</span>
+                        </li>
+                        <li>
+                            <a href="javascript:;" @click="logout">登出</a>
+                        </li>
+                    </ul>
+                    <ul class="right menu">
+                        <li>
+                            <a href="javascript:;" @click="logout">购物车</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
             </header>
         </div>
 
@@ -48,7 +78,7 @@
                 </div>
                 <span style="color:red;">{{check}}</span>
                 <button @click="login">
-                    登陆
+                    <span>登陆</span>
                 </button>
 
                 <!-- <button>
@@ -136,7 +166,7 @@ export default {
 </script>
 
 <style scoped>
-* {
+/* * {
   margin: 0;
   padding: 0;
 }
@@ -172,8 +202,9 @@ a:hover {
   color: #f30213;
 }
 .header-container {
-  background: #e3e4e5;
+  background: black;
   min-width: 1100px;
+  height:50px;
   margin-bottom: 50px;
 }
 header::after {
@@ -182,70 +213,138 @@ header::after {
   height: 0;
   clear: both;
   visibility: hidden;
-}
-.login-modal {
-  border: 1px solid black;
-  position: absolute;
-  top: 100px;
-  left: 50%;
-  width: 500px;
-  margin-left: -241px;
-  border-radius: 5px;
-  /* display: none; */
-  background-color: white;
-  z-index: 10;
-}
-.username {
-  vertical-align: middle;
+} */
+* {
+    margin: 0;
+    padding: 0;
 }
 
-.modal-header{
-  border: 1px solid transparent;
-  border-radius: 5px;
-  background-color: #f3f3f3;
-  border-bottom: 1px solid #e5e5e5;
-  margin-bottom: 20px;
+header {
+    background: black;
+    height: 100px;
 }
-.modal-header a{
-  float: right;
-  margin-right: 20px;
-  margin-top: 7px;
-  user-select: none;
+
+.nav {
+    display: flex;
+    width: 1200px;
+    height: 100%;
+    display: flex;
+    margin: 0 auto;
+    /* border: 1px solid red; */
+    justify-content: space-between;
 }
-.modal-header h4{
-      line-height: 2;
-      margin: 0 10px;
-      display: inline;
+
+.img img {
+    height: 50px;
+    width: 50px;
 }
-.modal-main{
-  margin:0 70px;
+
+.nav-left {
+    display: flex;
+    align-items: center;
 }
-.modal-main input{
-  width:100%;
-  margin: 10px 0;
-  height: 34px;
-  padding: 2px 2px;
-  box-sizing: border-box;
+
+.nav-right {
+    display: flex;
+    align-items: center;
 }
-.modal-main button{
-  width:100%;
-  background-color: #eb5858;
-  line-height: 2;
-  cursor: pointer;
-  border-radius: 4px;
-  border: 1px solid transparent;
-  margin: 10px 0;
+a{
+  text-decoration: none;
 }
-#zhezhao{
-  position:absolute;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  background-color: black;
-  opacity:0.5;
-  filter:Alpha(opacity=50);
-  /* display: block; */
+.nav-right a {
+    color: aliceblue;
+    display: inline-block;
+    text-decoration: none;
+}
+
+.right {
+    list-style: none;
+}
+
+li {
+    float: left;
+    margin-right: 10px;
+}
+
+
+span {
+    color: aliceblue;
+}
+
+
+.login-modal {
+    border: 1px solid black;
+    position: absolute;
+    top: 100px;
+    left: 50%;
+    width: 500px;
+    margin-left: -241px;
+    border-radius: 5px;
+    /* display: none; */
+    background-color: white;
+    z-index: 10;
+}
+
+.username {
+    vertical-align: middle;
+}
+
+.modal-header {
+    border: 1px solid transparent;
+    border-radius: 5px;
+    background-color: #f3f3f3;
+    border-bottom: 1px solid #e5e5e5;
+    margin-bottom: 20px;
+}
+
+.modal-header a {
+    float: right;
+    margin-right: 20px;
+    margin-top: 7px;
+    user-select: none;
+    color:black;
+}
+.modal-header a:visited {
+  color:black;
+}
+.modal-header h4 {
+    line-height: 2;
+    margin: 0 10px;
+    display: inline;
+}
+
+.modal-main {
+    margin: 0 70px;
+}
+
+.modal-main input {
+    width: 100%;
+    margin: 10px 0;
+    height: 34px;
+    padding: 2px 2px;
+    box-sizing: border-box;
+}
+
+.modal-main button {
+    width: 100%;
+    background-color: black;
+    line-height: 2;
+    cursor: pointer;
+    border-radius: 4px;
+    border: 1px solid transparent;
+    margin: 10px 0;
+}
+
+#zhezhao {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    opacity: 0.5;
+    filter: Alpha(opacity=50);
+    /* display: block; */
 }
 
 </style>
