@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="w">
 
 
         <div class="header-container">
@@ -218,6 +218,7 @@ header::after {
     margin: 0;
     padding: 0;
 }
+
 
 header {
     background: black;

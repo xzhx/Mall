@@ -1,6 +1,6 @@
 <template>
-  <div class="go">
-    <span>你还尚未登陆！</span>
+  <div class="go" v-show="this.$store.state.isMessage">
+    <span>{{msg}}</span>
     <a href="javascript:;">╳</a>
   </div>
 </template>
@@ -11,6 +11,11 @@ export default {
   data () {
     return {
 
+    }
+  },
+  computed:{
+    msg(){
+      return this.$store.state.msg;
     }
   },
   props:{

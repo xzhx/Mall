@@ -9,68 +9,55 @@
         <!-- <button @click="changeSort">{{sortWay}}</button> -->
         <div class="top-main">
           <a href="javascript:;" @click="norm" v-bind:class="{choose: ((sort==2)?true:false)}">默认排序</a>
-          <a href="javascript:;"  @click="asc">价格升序</a>
-          <a href="javascript:;" @click="desc">价格降序</a>
+          <a href="javascript:;"  @click="asc" v-bind:class="{choose: ((sort==1)?true:false)}">价格升序</a>
+          <a href="javascript:;" @click="desc" v-bind:class="{choose: ((sort==-1)?true:false)}">价格降序</a>
         </div>
       </div>
       <div id="container">
 
         <div class="item" v-for="item in itemList">
           <div class="itemImage">
-            <img v-bind:src="'/static/image/'+item.productImage" alt="">
+            <img v-lazy="'/static/image/'+item.productImage" alt="">
           </div>
           <div class="itemName">{{item.productName}}</div>
-          <div class="itemPrice">{{item.productPrice}}</div>
+          <div class="itemPrice">￥{{item.productPrice}}</div>
           <br>
-          <!-- <div class="smallbox"></div> -->
 
           <button>
             加入购物车
           </button>
-
-
-
-
-
         </div>
       </div>
       <hr>
     </div>
     <!-- <footer>这里是暂时的页尾</footer> -->
+    <footer-box></footer-box>
 
   </div>
 </template>
 <script>
   import NavHeader from './../components/NavHeader.vue'
   import axios from 'axios'
+  import FooterBox from './../components/FooterBox.vue'
   import Message from './../components/Message.vue'
   export default {
     name: 'MallPage',
     components:{
       NavHeader,
-      Message
+      Message,
+      FooterBox
     },
     data: function aa() {
       return {
-        itemList: [],
-        msg: "jasdia",
-        sort: 2,
-        // defaultPage:1,
-        // defaultSize:6
-        page:1,
-        size:8,
-        sortWay:"升序"
+        itemList: [],  //存放请求到的商品列表
+        msg: "",
+        sort: 2,    //2表示默认排序，1表示升序，-1表示降序
+        page: 1,     //表示页数
+        size: 18,     //表示每次请求的数量
+        // sortWay:"升序"
       }
     },
     mounted() {
-      // axios.get('/itemList').then((res)=>{
-      //   let data = res.data;
-      //   if(data.status == '0'){
-      //     this.itemList = data.result.itemList;
-      //   }else if(data.status=='1'){
-      //     this.itemList = []
-      //   }
-      // })
       this.getItem();
     },
     methods:{
@@ -89,13 +76,13 @@
         }
       })
       },
-      changeSort(){
-        this.sort = -this.sort;
-        this.page = 1;
-        this.getItem();
-        if(this.sort==1) this.sortWay="升序";
-        if(this.sort==-1) this.sortWay="降序";
-      },
+      // changeSort(){
+      //   this.sort = -this.sort;
+      //   this.page = 1;
+      //   this.getItem();
+      //   if(this.sort==1) this.sortWay="升序";
+      //   if(this.sort==-1) this.sortWay="降序";
+      // },
       asc(){
         this.sort = 1;
         this.getItem();
@@ -164,38 +151,53 @@
     border: 1px solid #efefef;
     box-sizing: border-box;
     /* height: 200px; */
-    transition: all .6s;
+    transition: all .4s;
     background: #fff;
     height:410px;
-    /* text-align: center; */
+    text-align: center;
   }
 
   .item:hover {
     /* border: 1px solid #00BFFF; */
     /* transition:all 5s; */
     /* transform: scale(1.01) */
-    box-shadow: 5px 5px 20px #888888;
+    box-shadow: 0 0 10px #888888 inset;
     /* transform:rotate(7deg) */
-    transform: translateY(-2px)
+    /* transform: translateY(-2px) */
   }
+.item .itemPrice{
+    color: #e4393c;
+}
+  /* .item:hover .smallbox {
 
-  .item:hover .smallbox {
-
-    /* transition:all 5s; */
-    /* transform: scale(1.01) */
-    /* box-shadow: 10px 10px 5px #888888; */
-    /* transform:rotate(7deg) */
-    /* transform:translateY(-10px); */
+    transition:all 5s;
+    transform: scale(1.01);
+    box-shadow: 10px 10px 5px #888888;
+    transform:rotate(7deg);
+    transform:translateY(-10px);
     transform: scale(1.3)
-  }
+  } */
+
+.item button{
+  width:60%;
+  font-size:16px;
+  background: black;
+  color: white;
+  height: 3em;
+  cursor: pointer;
+  border: none;
+}
 .itemImage{
   width:100%;
+  margin-top:20px;
 }
 .itemImage img{
   /* width: 100%; */
   /* width:100%; */
   display: block;
   margin: 5px auto;
+  width:220px;
+  height:220px;
 }
 .choose{
   color: black !important;

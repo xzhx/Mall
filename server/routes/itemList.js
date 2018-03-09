@@ -3,6 +3,7 @@ var router = express.Router();
 
 var mongoose = require('mongoose')
 var items = require('./../models/items')
+var users = require('./../models/users')
 mongoose.connect('mongodb://127.0.0.1:27017/testMall')//连接数据库
 // mongoose.connection.on('connected',function(){})//监听连接成功
 // mongoose.connection.on('error',function(){})//监听连接失败
@@ -67,4 +68,18 @@ router.get('/',function(req,res,next){
   }
 });
 
+// 加入购物车接口
+router.post("/addItem",function(req,res,next){
+  //从cookie中拿取userName
+  let userName = req.cookies.userName;
+  users.find({
+    userName:userName
+  },function(err,doc){
+    if(err){
+
+    }else{
+
+    }
+  })
+})
 module.exports = router;
