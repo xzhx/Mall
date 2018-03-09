@@ -61,7 +61,7 @@
             </header>
         </div>
 
-        <div class="login-modal" v-if="ifShow">
+        <!-- <div class="login-modal" v-if="ifShow">
             <div class="modal-header">
                 <h4>登陆</h4>
                 <a href="javascript:;" v-on:click="hidden">X</a>
@@ -80,22 +80,23 @@
                 <button @click="login">
                     <span>登陆</span>
                 </button>
-
-                <!-- <button>
-                      注册
-                    </button> -->
             </div>
 
 
         </div>
-        <div id="zhezhao" v-if="ifShow" @click="hidden"></div>
+        <div id="zhezhao" v-if="ifShow" @click="hidden"></div> -->
+        <login-box v-on:hidden="hiddenLogin" v-if="ifShow"></login-box>
     </div>
 </template>
 
 <script>
 import axios from "axios";
+import LoginBox from "./LoginBox"
 export default {
   name: "navHeader",
+  components:{
+    LoginBox
+  },
   data() {
     return {
       userName: "",
@@ -105,34 +106,34 @@ export default {
       check:" "
     };
   },
-  computed:{
+  computed: {
     loginUserName(){
       return this.$store.state.userName;
     }
   },
   methods: {
-    login: function() {
-      axios
-        .post("/users/login", {
-          userName: this.userName,
-          password: this.password
-        })
-        .then(res => {
-          let result = res.data;
-          // alert(result.statusInfo);
+    // login: function() {
+    //   axios
+    //     .post("/users/login", {
+    //       userName: this.userName,
+    //       password: this.password
+    //     })
+    //     .then(res => {
+    //       let result = res.data;
+    //       // alert(result.statusInfo);
 
-          if(result.status==0){
-            this.ifShow = false;
-            this.check = " ";
-            //this.loginUserName = result.data.userName
-            // 使用vuex保存用户信息
-            this.$store.commit('setUserName',result.data.userName);
-          }else{
-            this.check = '账号或密码错误';
-          }
-          // this.flag=true;
-        });
-    },
+    //       if(result.status==0){
+    //         this.ifShow = false;
+    //         this.check = " ";
+    //         //this.loginUserName = result.data.userName
+    //         // 使用vuex保存用户信息
+    //         this.$store.commit('setUserName',result.data.userName);
+    //       }else{
+    //         this.check = '账号或密码错误';
+    //       }
+    //       // this.flag=true;
+    //     });
+    // },
     logout: function(){
       axios.post("/users/logout").then((res)=>{
         //this.loginUserName = ""
@@ -143,9 +144,9 @@ export default {
     display: function(){
       this.ifShow = true;
     },
-    hidden: function(){
-      this.ifShow = false;
-    },
+    // hidden: function(){
+    //   this.ifShow = false;
+    // },
     ifLogin: function(){
       axios.get("/users/ifLogin").then((res)=>{
         let status = res.data.status;
@@ -156,6 +157,10 @@ export default {
 
         }
       })
+    },
+    hiddenLogin: function(){
+      this.ifShow = false;
+      // console.log(1)
     }
 
   },
@@ -273,7 +278,7 @@ span {
 }
 
 
-.login-modal {
+/* .login-modal {
     border: 1px solid black;
     position: absolute;
     top: 100px;
@@ -281,12 +286,11 @@ span {
     width: 500px;
     margin-left: -241px;
     border-radius: 5px;
-    /* display: none; */
     background-color: white;
     z-index: 10;
-}
+} */
 
-.username {
+/* .username {
     vertical-align: middle;
 }
 
@@ -304,8 +308,8 @@ span {
     margin-top: 7px;
     user-select: none;
     color:black;
-}
-.modal-header a:visited {
+} */
+/* .modal-header a:visited {
   color:black;
 }
 .modal-header h4 {
@@ -316,17 +320,17 @@ span {
 
 .modal-main {
     margin: 0 70px;
-}
+} */
 
-.modal-main input {
+/* .modal-main input {
     width: 100%;
     margin: 10px 0;
     height: 34px;
     padding: 2px 2px;
     box-sizing: border-box;
-}
+} */
 
-.modal-main button {
+/* .modal-main button {
     width: 100%;
     background-color: black;
     line-height: 2;
@@ -334,7 +338,7 @@ span {
     border-radius: 4px;
     border: 1px solid transparent;
     margin: 10px 0;
-}
+} */
 
 #zhezhao {
     position: absolute;
@@ -345,7 +349,6 @@ span {
     background-color: black;
     opacity: 0.5;
     filter: Alpha(opacity=50);
-    /* display: block; */
 }
 
 </style>

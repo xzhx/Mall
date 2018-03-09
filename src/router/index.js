@@ -5,6 +5,7 @@ import MallPage from './../views/MallPage.vue'
 import NavHeader from './../components/NavHeader.vue'
 import Message from './../components/Message.vue'
 import FooterBox from './../components/FooterBox.vue'
+import LoginBox from './../components/LoginBox.vue'
 Vue.use(Router)
 
 export default new Router({
@@ -15,9 +16,9 @@ export default new Router({
       component: MallPage
     },
     {
-      path: '/FooterBox',
-      name: 'FooterBox',
-      component: FooterBox
+      path: '/LoginBox',
+      name: 'LoginBox',
+      component: LoginBox
     }
   ]
 })
