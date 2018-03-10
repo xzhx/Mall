@@ -29,8 +29,8 @@ app.use(function(req,res,next){
     // next()表示将控制权交给下一个中间件，之后的中间件就是我们建立的路由表，所以拦截器要在路由表的前面
     next();
   } else {
-    if(req.path == '/users/login' || req.path == '/itemList'){
-      // 登陆接口和查看商品接口不拦截
+    if(req.path == '/users/login' || req.path == '/itemList'||req.path == '/users/signUp'){
+      // 登陆接口,注册接口和查看商品接口不拦截
       next();
     } else {
       res.json({

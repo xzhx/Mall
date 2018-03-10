@@ -40,7 +40,7 @@
                             <a href="javascript:;" @click="display">登陆</a>
                         </li>
                         <li>
-                            <a href="javascript:;">注册</a>
+                            <a href="javascript:;" @click="displayRegister">注册</a>
                         </li>
                     </ul>
                     <ul class="right menu" v-show="loginUserName">
@@ -86,16 +86,19 @@
         </div>
         <div id="zhezhao" v-if="ifShow" @click="hidden"></div> -->
         <login-box v-on:hidden="hiddenLogin" v-if="ifShow"></login-box>
+        <Register-box v-on:hidden="hiddenRegister" v-if="regIfShow"></Register-box>
     </div>
 </template>
 
 <script>
 import axios from "axios";
 import LoginBox from "./LoginBox"
+import RegisterBox from './RegisterBox'
 export default {
   name: "navHeader",
   components:{
-    LoginBox
+    LoginBox,
+    RegisterBox
   },
   data() {
     return {
@@ -103,7 +106,8 @@ export default {
       password: "",
       //loginUserName:"",
       ifShow:false,
-      check:" "
+      check:" ",
+      regIfShow: false
     };
   },
   computed: {
@@ -161,6 +165,12 @@ export default {
     hiddenLogin: function(){
       this.ifShow = false;
       // console.log(1)
+    },
+    hiddenRegister: function(){
+      this.regIfShow = false;
+    },
+    displayRegister: function(){
+      this.regIfShow = true;
     }
 
   },

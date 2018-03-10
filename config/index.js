@@ -22,6 +22,9 @@ module.exports = {
       },
       '/users/ifLogin':{
         target:'http://localhost:3000'
+      },
+      '/users/signUp':{
+        target:'http://localhost:3000'
       }
     },
 

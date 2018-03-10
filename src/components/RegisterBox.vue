@@ -2,7 +2,7 @@
   <div>
     <div class="login-modal">
             <div class="modal-header">
-                <h4>登陆</h4>
+                <h4>注册</h4>
                 <a href="javascript:;" v-on:click="hidden">X</a>
             </div>
 
@@ -16,8 +16,8 @@
                     <input class="" type="password" v-model="password" placeholder="Password">
                 </div>
                 <span style="color:red;">{{check}}</span>
-                <button @click="login">
-                    <span>登陆</span>
+                <button @click="signUp">
+                    <span>注册</span>
                 </button>
 
                 <!-- <button>
@@ -135,7 +135,16 @@ export default {
       this.$emit('hidden');
     },
     signUp(){
-
+      axios.post('/users/signUp',{
+        userName: this.userName,
+        password: this.password
+      })
+      .then(res=>{
+        let result = res.data;
+        if(result.status == 0){
+          this.hidden();
+        }
+      })
     }
   }
 }
