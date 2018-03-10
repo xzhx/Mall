@@ -143,6 +143,8 @@ export default {
         let result = res.data;
         if(result.status == 0){
           this.hidden();
+        } else{
+          this.check = result.statusInfo;
         }
       })
     }

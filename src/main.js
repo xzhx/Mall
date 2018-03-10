@@ -21,11 +21,17 @@ const store = new Vuex.Store({
   state:{
     userName: '',
     isMessage: false,
-    msg:'未登录！'
+    msg:''
   },
   mutations:{
     setUserName(state,userName){
       state.userName = userName;
+    },
+    setMessage(state,msg){
+      state.msg = msg;
+    },
+    showMessage(state){
+      state.isMessage = true;
     }
   }
 })

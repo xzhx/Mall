@@ -153,6 +153,8 @@ export default {
             this.$store.commit('setUserName',result.data.userName);
           }else{
             this.check = '账号或密码错误';
+            // this.$store.commit('setMessage',this.check);
+            // this.$store.commit('showMessage');
           }
           // this.flag=true;
         });
