@@ -53,7 +53,7 @@
                     </ul>
                     <ul class="right menu">
                         <li>
-                            <a href="javascript:;" @click="logout">购物车</a>
+                            <a href="javascript:;">购物车</a><div class="cartNumber"><span>{{cartNumber}}</span></div>
                         </li>
                     </ul>
                 </div>
@@ -107,7 +107,8 @@ export default {
       //loginUserName:"",
       ifShow:false,
       check:" ",
-      regIfShow: false
+      regIfShow: false,
+      cartNumber: '2'
     };
   },
   computed: {
@@ -234,7 +235,16 @@ header::after {
     padding: 0;
 }
 
-
+.cartNumber{
+  background: red;
+  display: inline-block;
+  width:20px;
+  border-radius: 10px;
+  text-align: center;
+}
+.cartNumber *{
+  color: white;
+}
 header {
     background: black;
     height: 100px;

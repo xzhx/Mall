@@ -32,6 +32,14 @@ const store = new Vuex.Store({
     },
     showMessage(state){
       state.isMessage = true;
+    },
+    hideMessage(state){
+      state.isMessage = false;
+    }
+  },
+  actions:{
+    displayMessage(context){
+      context.commit('showMessage');
     }
   }
 })

@@ -1,7 +1,7 @@
 <template>
   <div class="go" v-show="this.$store.state.isMessage">
     <span>{{msg}}</span>
-    <a href="javascript:;">╳</a>
+    <a href="javascript:;" @click="hideMessage">╳</a>
   </div>
 </template>
 
@@ -20,6 +20,11 @@ export default {
   },
   props:{
 
+  },
+  methods:{
+    hideMessage(){
+      this.$store.commit('hideMessage')
+    }
   }
 }
 </script>
@@ -54,10 +59,10 @@ a:hover{
   animation: shake .2s;
 }
 @keyframes shake {
-  10% {transform: translateX(-5px)}
+  10% {transform: translateX(-7px)}
   40% {transform: translateX(5px)}
   60% {transform: translateX(-7px)}
-  80% {transform: translateX(3px)}
+  80% {transform: translateX(5px)}
   100%{transform: translateX(0)}
 }
 </style>

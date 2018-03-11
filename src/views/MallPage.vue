@@ -1,7 +1,7 @@
 <template>
   <div>
     <message></message>
-    <nav-header></nav-header>
+    <nav-header ref="header"></nav-header>
     <!-- <hr> -->
 
     <div class="main">
@@ -32,7 +32,7 @@
     </div>
     <!-- <footer>这里是暂时的页尾</footer> -->
     <footer-box></footer-box>
-
+    <cart v-bind:if-show="addAnimation"></cart>
   </div>
 </template>
 <script>
@@ -40,12 +40,14 @@
   import axios from 'axios'
   import FooterBox from './../components/FooterBox.vue'
   import Message from './../components/Message.vue'
+  import Cart from './../components/Cart.vue'
   export default {
     name: 'MallPage',
     components:{
       NavHeader,
       Message,
-      FooterBox
+      FooterBox,
+      Cart
     },
     data: function aa() {
       return {
@@ -55,6 +57,7 @@
         page: 1,     //表示页数
         size: 18,     //表示每次请求的数量
         // sortWay:"升序"
+        addAnimation: false
       }
     },
     mounted() {
@@ -100,9 +103,23 @@
           .then((res)=>{
             let result = res.data;
             if(result.status==0){
-              alert('加入成功');
+              // alert('加入成功');
+              this.switchAnimation();
+
+            }
+            if(result.status == -2){
+
+              this.$store.commit('setMessage',result.statusInfo);
+              this.$store.dispatch('displayMessage');
+              this.$refs.header.ifShow = true;
             }
           })
+      },
+      switchAnimation(){
+        this.addAnimation = true;
+        setTimeout(()=>{
+          this.addAnimation = false;
+        },200)
       }
 
     }

@@ -43,7 +43,7 @@ a{
 }
 .login-modal {
     border: 1px solid black;
-    position: absolute;
+    position: fixed;
     top: 100px;
     left: 50%;
     width: 500px;
@@ -105,7 +105,7 @@ a{
 }
 
 #zhezhao {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
@@ -151,6 +151,7 @@ export default {
             //this.loginUserName = result.data.userName
             // 使用vuex保存用户信息
             this.$store.commit('setUserName',result.data.userName);
+            this.$store.commit('hideMessage')
           }else{
             this.check = '账号或密码错误';
             // this.$store.commit('setMessage',this.check);
