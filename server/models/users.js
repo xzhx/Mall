@@ -12,11 +12,11 @@ var usersSchema = new Schema({
       "productName" : String,
       "productPrice" : Number,
       "productImage" : String,
-      "number": String,
+      "amount": String,
       "isChoose": Boolean
     }
   ]
 })
-
+// user的schema中的cart代表该用户的购物车
 module.exports = mongoose.model("user",usersSchema)
 // module.exports = mongoose.model('user',itemsSchema,'users')

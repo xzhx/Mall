@@ -25,6 +25,9 @@ module.exports = {
       },
       '/users/signUp':{
         target:'http://localhost:3000'
+      },
+      '/itemList/addItem':{
+        target:'http://localhost:3000'
       }
     },
 

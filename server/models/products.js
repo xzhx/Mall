@@ -7,8 +7,10 @@ var itemsSchema = new Schema({
   "productId" : String,
   "productName" : String,
   "productPrice" : Number,
-  "productImage" : String
+  "productImage" : String,
+  "amount": String,
+  "isChoose": Boolean
 })
 
-module.exports = mongoose.model('item',itemsSchema)
-// module.exports = mongoose.model('item',itemsSchema,'items')
+module.exports = mongoose.model('product',itemsSchema)
+// module.exports = mongoose.model('product',itemsSchema,'products')

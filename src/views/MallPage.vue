@@ -23,7 +23,7 @@
           <div class="itemPrice">￥{{item.productPrice}}</div>
           <br>
 
-          <button>
+          <button @click="addItem(item.productId)">
             加入购物车
           </button>
         </div>
@@ -94,6 +94,15 @@
       norm(){
         this.sort = 2;
         this.getItem();
+      },
+      addItem(productId){
+        axios.post('/itemList/addItem',{productId:productId})
+          .then((res)=>{
+            let result = res.data;
+            if(result.status==0){
+              alert('加入成功');
+            }
+          })
       }
 
     }
