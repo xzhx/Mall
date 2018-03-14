@@ -2,7 +2,7 @@
 <div class="footer-main">
   <div class="content">
     <p>Copyright © 2017, xzhx</p>
-    <p><a href="/">首页</a></p>
+    <p><router-link to="/">首页</router-link></p>
   </div>
 </div>
 </template>

@@ -28,7 +28,25 @@ module.exports = {
       },
       '/itemList/addItem':{
         target:'http://localhost:3000'
-      }
+      },
+      '/users/cart':{
+        target:'http://localhost:3000'
+      },
+      '/users/deleteCartItem':{
+        target:'http://localhost:3000'
+      },
+      '/users/changeCartAmount':{
+        target:'http://localhost:3000'
+      },
+      '/users/changeChoose':{
+        target:'http://localhost:3000'
+      },
+      '/users/changeChooseAll':{
+        target:'http://localhost:3000'
+      },
+      '/users/cartNum':{
+        target:'http://localhost:3000'
+      },
     },
 
     // Various Dev Server settings

@@ -31,7 +31,7 @@
                 <div class="nav">
                 <div class="nav-left">
                     <div class="img">
-                        <a href="http://localhost:8080/#/"><img src="./../../static/logo/logo.png" alt=""></a>
+                        <router-link to="/"><img src="./../../static/logo/logo.png" alt=""></router-link>
                     </div>
                 </div>
                 <div class="nav-right">
@@ -53,7 +53,7 @@
                     </ul>
                     <ul class="right menu">
                         <li>
-                            <a href="javascript:;">购物车</a><div class="cartNumber"><span>{{cartNumber}}</span></div>
+                            <router-link to="/CartPage">购物车</router-link><div class="cartNumber"><span>{{this.$store.state.cartNum}}</span></div>
                         </li>
                     </ul>
                 </div>
@@ -108,7 +108,7 @@ export default {
       ifShow:false,
       check:" ",
       regIfShow: false,
-      cartNumber: '2'
+      // cartNumber: '2'
     };
   },
   computed: {
@@ -145,6 +145,9 @@ export default {
         // 使用vuex保存用户信息
         this.$store.commit('setUserName','');
       })
+      this.$router.push({
+        path: '/'
+      })
     },
     display: function(){
       this.ifShow = true;
@@ -153,13 +156,12 @@ export default {
     //   this.ifShow = false;
     // },
     ifLogin: function(){
-      axios.get("/users/ifLogin").then((res)=>{
+      axios.get('/users/ifLogin').then((res)=>{
         let status = res.data.status;
-        if(status == "0"){
+        if(status == '0'){
           // this.loginUserName = res.data.data.userName;
           // 使用vuex保存用户信息
           this.$store.commit('setUserName',res.data.data.userName);
-
         }
       })
     },
@@ -172,64 +174,25 @@ export default {
     },
     displayRegister: function(){
       this.regIfShow = true;
+    },
+    getCartNum(){
+      axios.get('/users/cartNum')
+        .then(res=>{
+          let cartNum = res.data.data;
+          this.$store.commit('setCartNum',cartNum)
+        })
     }
 
   },
   mounted(){
-    this.ifLogin()
+    this.ifLogin();
+    this.getCartNum();
   }
 };
 </script>
 
 <style scoped>
-/* * {
-  margin: 0;
-  padding: 0;
-}
-.menu {
-  list-style: none;
-}
-header {
-  vertical-align: middle;
-  margin: 0 154px;
-}
-li {
-  float: left;
-  margin: 0 20px;
-}
-.left {
-  float: left;
-}
-.right {
-  float: right;
-}
-a {
-  text-decoration: none;
-  color: #999;
-  font-size: 15px;
-}
-a:visited {
-  color: #999;
-}
-ul span{
-  color: #999;
-}
-a:hover {
-  color: #f30213;
-}
-.header-container {
-  background: black;
-  min-width: 1100px;
-  height:50px;
-  margin-bottom: 50px;
-}
-header::after {
-  content: "";
-  display: block;
-  height: 0;
-  clear: both;
-  visibility: hidden;
-} */
+
 * {
     margin: 0;
     padding: 0;
@@ -298,67 +261,7 @@ span {
 }
 
 
-/* .login-modal {
-    border: 1px solid black;
-    position: absolute;
-    top: 100px;
-    left: 50%;
-    width: 500px;
-    margin-left: -241px;
-    border-radius: 5px;
-    background-color: white;
-    z-index: 10;
-} */
 
-/* .username {
-    vertical-align: middle;
-}
-
-.modal-header {
-    border: 1px solid transparent;
-    border-radius: 5px;
-    background-color: #f3f3f3;
-    border-bottom: 1px solid #e5e5e5;
-    margin-bottom: 20px;
-}
-
-.modal-header a {
-    float: right;
-    margin-right: 20px;
-    margin-top: 7px;
-    user-select: none;
-    color:black;
-} */
-/* .modal-header a:visited {
-  color:black;
-}
-.modal-header h4 {
-    line-height: 2;
-    margin: 0 10px;
-    display: inline;
-}
-
-.modal-main {
-    margin: 0 70px;
-} */
-
-/* .modal-main input {
-    width: 100%;
-    margin: 10px 0;
-    height: 34px;
-    padding: 2px 2px;
-    box-sizing: border-box;
-} */
-
-/* .modal-main button {
-    width: 100%;
-    background-color: black;
-    line-height: 2;
-    cursor: pointer;
-    border-radius: 4px;
-    border: 1px solid transparent;
-    margin: 10px 0;
-} */
 
 #zhezhao {
     position: absolute;

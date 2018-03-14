@@ -113,6 +113,7 @@ a{
     background-color: black;
     opacity: 0.5;
     filter: Alpha(opacity=50);
+    z-index: 9;
     /* display: block; */
 }
 .modal-main>span{

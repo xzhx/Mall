@@ -28,7 +28,7 @@ router.post('/login',function(req,res,next){
         //cookie的path表示路径
         res.cookie("userName",doc.userName,{
           path: "/",
-          maxAge: "1000000"
+          maxAge: "10000000"
         })
         res.json({
           status:"0",
@@ -102,6 +102,7 @@ router.post('/signUp',function(req,res,next){
 // 用户登出接口
 router.post("/logout",function(req,res,next){
   res.clearCookie("userName");
+  // res.redirect('/')
   res.json({
     status: "0",
     statusInfo: "log out"
@@ -118,6 +119,171 @@ router.get("/ifLogin",(req,res,next)=>{
       statusInfo: "登录状态",
       data:{
         userName: userName
+      }
+    })
+  }
+})
+
+
+
+// 查询当前用户购物车列表接口
+router.get('/cart',(req,res,next)=>{
+  let userName = req.cookies.userName;
+  users.findOne({userName:userName},(err,doc)=>{
+    if(err){
+      res.json({
+        status: '10',
+        statusInfo: err.message,
+        data:{}
+      })
+    } else {
+      if(doc){
+        res.json({
+          status: '0',
+          statusInfo: '成功返回购物车列表数据',
+          data: doc.cart
+        })
+      }
+    }
+  })
+})
+
+// 购物车的全选和取消全选接口
+router.post('/changeChooseAll',(req,res,next)=>{
+  let userName = req.cookies.userName;
+  let isChooseAll = req.body.isChooseAll;
+  users.findOne({userName:userName},(err,user)=>{
+    if(err){
+      res.json({
+        status: '1',
+        statusInfo: err.message
+      })
+    } else {
+      if(user){
+        user.cart.forEach((product)=>{
+          product.isChoose = isChooseAll;
+        })
+        user.save((err,doc)=>{
+          if(err){
+            res.json({
+              status: '1',
+              statusInfo: err.message
+            })
+          } else {
+            res.json({
+              status: '0',
+              statusInfo: 'change suc',
+              data: user
+            })
+          }
+        })
+      }
+    }
+  })
+})
+
+
+
+// 改变选中或者非选中状态
+router.post('/changeChoose',(req,res,next)=>{
+  let userName = req.cookies.userName;
+  let productId = req.body.productId;
+  let isChoose = req.body.isChoose;
+  users.update({
+    'userName':userName,
+    'cart.productId':productId
+  },{
+    'cart.$.isChoose':!isChoose
+  },(err,doc)=>{
+    if(err){
+      res.json({
+        status:'10',
+        statusInfo: err.message
+      })
+    } else {
+      res.json({
+        status:'0',
+        statusInfo:'edit suc'
+      })
+    }
+  })
+})
+
+// 改变购物车中商品的数量
+router.post('/changeCartAmount',(req,res,next)=>{
+  let userName = req.cookies.userName;
+  let productId = req.body.productId;
+  let amount = req.body.amount;
+  users.update(
+    {
+    'userName':userName,
+    'cart.productId':productId
+    },
+    {
+      'cart.$.amount':amount
+    },(err,doc)=>{
+      if(err){
+        res.json({
+          status:'10',
+          statusInfo: err.message
+        })
+      } else {
+        res.json({
+          status:'0',
+          statusInfo:'edit suc'
+        })
+      }
+    })
+})
+
+
+
+// 删除购物车里商品的接口
+router.post('/deleteCartItem',(req,res,next)=>{
+  let productId = req.body.productId;
+  let userName = req.cookies.userName;
+  users.update({userName:userName},{
+    $pull:{
+      'cart':{
+        'productId':productId
+      }
+    }
+  },(err,doc)=>{
+    if(err){
+      res.json({
+        status:'11',
+        statusInfo:err.message
+      })
+    } else {
+      res.json({
+        status:'0',
+        statusInfo:'删除购物车数据成功'
+      })
+    }
+  })
+})
+
+
+// 查询用户的购物车数量（包括选中和未选中）,即商品种类*商品数量。
+router.get('/cartNum',(req,res,next)=>{
+  if(req.cookies.userName){
+    let userName = req.cookies.userName;
+    users.findOne({userName:userName},(err,doc)=>{
+      if(err){
+        res.json({
+          status: '1',
+          statusInfo: err.message
+        })
+      } else {
+        let total = 0;
+        doc.cart.forEach(product=>{
+          total += parseInt(product.amount);
+        })
+        res.json({
+          status: '0',
+          statusInfo: '查询成功',
+          data: total
+        })
       }
     })
   }

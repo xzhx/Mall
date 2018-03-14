@@ -15,7 +15,7 @@
       </div>
       <div id="container">
 
-        <div class="item" v-for="item in itemList">
+        <div class="item" v-for="item in itemList" v-bind:key="item.productId">
           <div class="itemImage">
             <img v-lazy="'/static/image/'+item.productImage" alt="">
           </div>
@@ -127,7 +127,7 @@
   }
 
 </script>
-<style>
+<style scoped>
   * {
     margin: 0px;
     padding: 0px;

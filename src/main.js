@@ -16,12 +16,22 @@ Vue.use(VueLazyload,{
 })
 Vue.config.productionTip = false
 
+
+// 利用导航守卫，可以动态的设置各个页面的title
+router.beforeEach((to,from,next)=>{
+  if(to.meta.title) {
+    document.title = to.meta.title;
+  }
+  next();
+})
+
 //创建一个store
 const store = new Vuex.Store({
   state:{
     userName: '',
     isMessage: false,
-    msg:''
+    msg:'',
+    cartNum: 0
   },
   mutations:{
     setUserName(state,userName){
@@ -35,6 +45,9 @@ const store = new Vuex.Store({
     },
     hideMessage(state){
       state.isMessage = false;
+    },
+    setCartNum(state,n){
+      state.cartNum = n;
     }
   },
   actions:{
