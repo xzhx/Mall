@@ -105,6 +105,7 @@
             if(result.status==0){
               // alert('加入成功');
               this.switchAnimation();
+              this.$store.commit('setCartNum',this.$store.state.cartNum+1)
 
             }
             if(result.status == -2){

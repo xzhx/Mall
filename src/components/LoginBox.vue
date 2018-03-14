@@ -152,6 +152,7 @@ export default {
             //this.loginUserName = result.data.userName
             // 使用vuex保存用户信息
             this.$store.commit('setUserName',result.data.userName);
+            this.getCartNum();
             this.$store.commit('hideMessage')
           }else{
             this.check = '账号或密码错误';
@@ -181,6 +182,13 @@ export default {
     },
     hidden(){
       this.$emit('hidden');
+    },
+    getCartNum(){
+      axios.get('/users/cartNum')
+        .then(res=>{
+          let cartNum = res.data.data;
+          this.$store.commit('setCartNum',cartNum)
+        })
     }
   }
 }

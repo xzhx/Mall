@@ -1,7 +1,10 @@
 <template>
-  <div class="container">
-        <div class="cart"><img src="./../../static/logo/cart.png" alt=""></div>
+  <div class="container" v-if="this.$store.state.userName">
+        <div class="cart"><img src="./../../static/logo/cart.png" alt="" @click="cartPage"></div>
         <div class="yuan" v-if="ifShow"></div>
+        <div class="cart-num" >
+          <span>{{this.$store.state.cartNum}}</span>
+        </div>
     </div>
 </template>
 <style scoped>
@@ -11,7 +14,21 @@
         position: fixed;
         right:0px;
         bottom:0px;
-        z-index: 10;
+        z-index: 7;
+    }
+    .cart-num{
+      position: fixed;
+      right:20px;
+      bottom:70px;
+      background: red;
+      border-radius: 50%;
+      z-index: 8;
+      width:20px;
+      text-align: center;
+    }
+    .cart-num span{
+      z-index: 8;
+      color: white;
     }
     @keyframes luoxia{
         0% {}
@@ -31,6 +48,7 @@
     .cart img{
       width: 100%;
       height: 100%;
+      cursor: pointer;
     }
 </style>
 <script>
@@ -41,6 +59,13 @@ export default {
 
     }
   },
-  props:['ifShow']
+  props:['ifShow'],
+  methods:{
+    cartPage(){
+      this.$router.push({
+        path: '/CartPage'
+      })
+    }
+  }
 }
 </script>

@@ -49,7 +49,7 @@
                   <label for="all">全选</label>
                   <span>删除选中的商品</span>
                   <a href="javascript:;" class="right pay" @click="orderComfirm">结算</a>
-                  <span class="right">总价：<span style="color: #d44d44;">{{priceSum}}</span></span>
+                  <span class="right">总价：<span style="color: #d44d44;">{{priceSum}}元</span></span>
                   <span class="right">选中<span style="color: #d44d44;">{{chooseNumber}}</span>件商品</span>
                 </div>
 
@@ -262,16 +262,19 @@ export default {
           let result = res.data;
           // debugger;
           this.getCart();
+          this.getCartNum();
         })
     },
     changeCartAmount(how,product){
       if(how=='add'){
         product.amount++;
+        this.$store.commit('setCartNum',this.$store.state.cartNum+1)
       } else {
         if(product.amount <=1){
           return;
         }
         product.amount--;
+        this.$store.commit('setCartNum',this.$store.state.cartNum-1)
       }
       axios.post('/users/changeCartAmount',{
         productId: product.productId,
@@ -303,6 +306,13 @@ export default {
           path: 'OrderComfirm'
         })
       }
+    },
+    getCartNum(){
+      axios.get('/users/cartNum')
+        .then(res=>{
+          let cartNum = res.data.data;
+          this.$store.commit('setCartNum',cartNum)
+        })
     }
   },
   mounted(){

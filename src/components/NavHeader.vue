@@ -53,7 +53,7 @@
                     </ul>
                     <ul class="right menu">
                         <li>
-                            <router-link to="/CartPage">购物车</router-link><div class="cartNumber"><span>{{this.$store.state.cartNum}}</span></div>
+                            <router-link to="/CartPage">购物车</router-link><div class="cartNumber"><span v-show="this.$store.state.userName">{{this.$store.state.cartNum}}</span></div>
                         </li>
                     </ul>
                 </div>
@@ -207,6 +207,8 @@ export default {
 }
 .cartNumber *{
   color: white;
+  background: red;
+  border-radius: 10px;
 }
 header {
     background: black;
